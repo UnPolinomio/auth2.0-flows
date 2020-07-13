@@ -13,7 +13,7 @@ export default class AuthService {
 
         let url = 'https://accounts.spotify.com/authorize'
         url += "?response_type=token"
-        url += "&client_id" + encodeURIComponent(process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID)
+        url += "&client_id=" + encodeURIComponent(process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID)
         url += "&scope=" + encodeURIComponent(scopesArray.join(" "))
         url += "&redirect_uri=" + encodeURIComponent(process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_REDIRECT)
         url += "&state=" + encodeURIComponent(state)
@@ -30,7 +30,7 @@ export default class AuthService {
 
     handleAuthentication = () => {
         return new Promise(( resolve, reject) => {
-            const { access_token, state } = getHashParams()
+            const { access_token, state, expires_in } = getHashParams()
             const auth_state = localStorage.getItem('auth_state')
 
             if (state===null || state !== auth_state) {
@@ -40,7 +40,7 @@ export default class AuthService {
             localStorage.removeItem('auth_state')
 
             if (access_token) {
-                this.setSession({ accessToken: access_token })
+                this.setSession({ accessToken: access_token, expiresIn: expires_in })
                 return resolve(access_token)
             } else {
                 return reject(new Error('The token is invalid'))
@@ -51,9 +51,9 @@ export default class AuthService {
     }
 
     setSession = (authResult) => {
-        const expiresAt = JSON.stringify({
+        const expiresAt = JSON.stringify(
             authResult.expiresIn * 1000 + new Date().getTime()
-        })
+        )
 
         localStorage.setItem('access_token', authResult.accessToken)
         localStorage.setItem('expires_at', expiresAt)
@@ -73,11 +73,11 @@ export default class AuthService {
             .then(response => response.json())
             .then(profile => {
                 this.setProfile(profile)
-                retrun profile
+                return profile
             })
     }
 
-    setProfile = () => {
+    setProfile = (profile) => {
         localStorage.setItem('profile', JSON.stringify(profile))
     }
 
