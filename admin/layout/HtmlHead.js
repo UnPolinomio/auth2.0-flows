@@ -1,8 +1,7 @@
-import React, { Fragment } from "react";
 import Head from "next/head";
 
 const HtmlHead = () => (
-  <Fragment>
+  <>
     <Head>
       <title>Felida Music | Admin</title>
 
@@ -19,7 +18,7 @@ const HtmlHead = () => (
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans:400,700"
       />
     </Head>
-  </Fragment>
+  </>
 );
 
 export default HtmlHead;

@@ -1,7 +1,6 @@
-import React from "react";
 import { Table, Button } from "semantic-ui-react";
 
-const IndexPage = () => {
+export default function IndexPage (){
   return (
     <div>
       <Table celled padded>
@@ -47,5 +46,3 @@ const IndexPage = () => {
     </div>
   );
 };
-
-export default IndexPage;

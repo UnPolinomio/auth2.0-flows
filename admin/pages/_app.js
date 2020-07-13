@@ -1,5 +1,4 @@
-import React from "react";
-import App, { Container } from "next/app";
+import App from "next/app";
 
 import HtmlHead from "../layout/HtmlHead";
 import AppLayout from "../layout/AppLayout";
@@ -16,12 +15,12 @@ export default class CustomApp extends App {
   render() {
     const { Component, pageProps, store } = this.props;
     return (
-      <Container>
+      <>
         <HtmlHead />
         <AppLayout>
           <Component {...pageProps} />
         </AppLayout>
-      </Container>
+      </>
     );
   }
 }

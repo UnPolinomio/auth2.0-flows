@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { Menu, Icon, Dropdown } from "semantic-ui-react";
